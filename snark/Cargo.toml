@@ -1,0 +1,92 @@
+[package]
+name = "zkrypto-circuits"
+authors = ["donny11489@gmail.com"]
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+rayon = "1.10.0"
+ark-bn254 = "0.4.0"
+ark-ed-on-bn254 = { version = "^0.4.0", features = ["r1cs"] }
+ark-crypto-primitives = { version = "0.4.0", default-features = true, features = [
+    "r1cs",
+    "encryption",
+    "crh",
+    "merkle_tree",
+] }
+ark-ec = "0.4.2"
+ark-ff = "0.4.2"
+ark-groth16 = "0.4.0"
+ark-poly = "0.4.2"
+ark-r1cs-std = "0.4.0"
+ark-relations = "0.4.0"
+sudoku-variants = "0.2.1"
+ark-serialize = "0.4.2"
+ark-std = { version = "0.4.0", features = ["getrandom"] }
+libc = "0.2"
+serde = { version = "1.0.163", features = ["derive"] }
+serde_json = "1.0.96"
+num-bigint = "0.4"
+csv = "1"
+derivative = "2.2.0"
+rand = "0.8.5"
+
+tracing = { version = "0.1" }
+tracing-subscriber = "0.2.0"
+hex = "0.4.3"
+field-matrix-utils = "0.1.1"
+
+[dev-dependencies]
+ark-bls12-381 = "0.4.0"
+num-bigint = "0.4.3"
+ark-ed-on-bls12-381 = { version = "^0.4.0", features = ["r1cs"] }
+ark-bls12-377 = "0.4.0"
+ark-cp6-782 = "0.4.0"
+ark-mnt4-298 = { version = "0.4.0", default-features = false, features = [
+    "r1cs",
+    "curve",
+] }
+ark-mnt6-298 = { version = "0.4.0", default-features = false, features = [
+    "r1cs",
+] }
+ark-mnt4-753 = { version = "0.4.0", default-features = false, features = [
+    "r1cs",
+    "curve",
+] }
+ark-mnt6-753 = { version = "0.4.0", default-features = false, features = [
+    "r1cs",
+] }
+
+[features]
+default = ["ark-crypto-primitives/r1cs", "parallel"]
+
+parallel = [
+    "ark-ff/parallel",
+    "ark-ec/parallel",
+    "ark-std/parallel",
+    "ark-poly/parallel",
+    "ark-groth16/parallel",
+]
+
+trace = ["ark-std/print-trace"]
+
+zkmarket = []
+generatetrade = []
+accepttrade = []
+registerdata = []
+api = []
+
+cc-groth16 = []
+cc-snark = []
+
+[profile.release]
+opt-level = 3
+
+[[bin]]
+name = "generate_crs"
+
+[lib]
+crate-type = ["staticlib", "lib"]
